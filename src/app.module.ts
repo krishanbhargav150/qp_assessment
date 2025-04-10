@@ -17,7 +17,7 @@ import { OrderItems } from './db/order-items.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'mysql', // localhost
       port: 3306,
       username: 'root',
       password: 'Krishan@150',
