@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Res } from '@nestjs/
 import { Items } from './dto/items.dto';
 import { GroceryService } from './grocery.service';
 import { Response } from 'express';
+import { Item } from 'src/db/item-details/item.entity';
 
 @Controller("grocery")
 export class GroceryController {
@@ -13,18 +14,28 @@ export class GroceryController {
         return res.status(201).send("Item details added successfully!");
     }
 
-    // @Get("/")
-    // async getItemDetails() {
-    //     await this.groceryService.getItemDetails();
-    // }
+    @Get("/")
+    async getItemDetails(): Promise<Item[]> {
+        return await this.groceryService.getItemDetails();
+    }
 
-    // @Delete("/:id")
-    // async removeItemDetails(@Param('id') id: number) {
-    //     await this.groceryService.removeItemDetails(id);
-    // }
+    @Get("/active-products/")
+    async getActiveItemDetails(): Promise<Item[]> {
+        return await this.groceryService.getActiveItemDetails();
+    }
 
-    // @Patch("/:id")
-    // async updateItemDetails(@Param('id') id: number, @Body() body: Items) {
-    //     await this.groceryService.updateItemDetails(id, body);
-    // }
+    @Get("/:id")
+    async getItemDetailsById(@Param('id') id: number): Promise<Item | null> {
+        return await this.groceryService.getItemDetailsById(id);
+    }
+
+    @Delete("/delete-item/:id")
+    async removeItemDetails(@Param('id') id: number) {
+        await this.groceryService.removeItemDetails(id);
+    }
+
+    @Patch("/update-details/:id")
+    async updateItemDetails(@Param('id') id: number, @Body() body: Partial<Items>) {
+        await this.groceryService.updateItemDetails(id, body);
+    }
 }

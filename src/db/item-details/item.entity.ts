@@ -16,4 +16,10 @@ export class Item {
 
     @Column()
     price: number;
+
+    @Column()
+    isDeleted: boolean;
+
+    @Column()
+    inventory: number;
 }

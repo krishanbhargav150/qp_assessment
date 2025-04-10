@@ -3,4 +3,6 @@ export interface Items {
     productName: string;
     MRP: number;
     price: number;
+    isDeleted: boolean;
+    inventory: number;
 }

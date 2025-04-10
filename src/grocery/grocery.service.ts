@@ -15,15 +15,26 @@ export class GroceryService {
         return await this.itemRepository.save(body);
     }
 
-    // async getItemDetails() {
-    //     return await this.itemRepository;
-    // }
+    async getItemDetails(): Promise<Item[]> {
+        return await this.itemRepository.find();
+    }
 
-    // async removeItemDetails(id: number) {
-    //     return id;
-    // }
+    async getActiveItemDetails(): Promise<Item[]> {
+        return await this.itemRepository.find({ where: { isDeleted: false }});
+    }
 
-    // async updateItemDetails(id: number, body: Items) {
-    //     return body;
-    // }
+    async getItemDetailsById(id: number): Promise<Item | null> {
+        return await this.itemRepository.findOne({
+            where: { id, isDeleted: false }
+        });
+    }
+
+    async removeItemDetails(id: number): Promise<boolean> {
+        const result = await this.itemRepository.update({ id }, { isDeleted: true });
+        return (result.affected ?? 0) > 0;
+    }
+
+    async updateItemDetails(id: number, body: Partial<Items>) {
+        return await this.itemRepository.update({ id }, body);
+    }
 }

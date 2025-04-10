@@ -9,6 +9,9 @@ import { OrderService } from './order/order.service';
 import { OrderModule } from './order/order.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Item } from './db/item-details/item.entity';
+import { Sequences } from './db/sequence.entity';
+import { Orders } from './db/order.entity';
+import { OrderItems } from './db/order-items.entity';
 
 @Module({
   imports: [
@@ -22,7 +25,7 @@ import { Item } from './db/item-details/item.entity';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    GroceryModule, OrderModule, TypeOrmModule.forFeature([Item])],
+    GroceryModule, OrderModule, TypeOrmModule.forFeature([Item, Sequences, Orders, OrderItems])],
   controllers: [AppController, GroceryController, OrderController],
   providers: [AppService, GroceryService, OrderService],
 })
