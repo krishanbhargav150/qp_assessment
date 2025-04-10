@@ -9,7 +9,7 @@ export class GroceryController {
     constructor( private groceryService: GroceryService) {}
 
     @Post("/add-new-item")
-    async addNewItem(@Body() body: Items, @Res() res: Response): Promise<Response> {
+    async addNewItem(@Body() body: Items[], @Res() res: Response): Promise<Response> {
         await this.groceryService.insertNewItem(body);
         return res.status(201).send("Item details added successfully!");
     }

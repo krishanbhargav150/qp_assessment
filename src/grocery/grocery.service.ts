@@ -11,7 +11,7 @@ export class GroceryService {
         private readonly itemRepository: Repository<Item>
     ) {}
 
-    async insertNewItem(body: Items) {
+    async insertNewItem(body: Items[]) {
         return await this.itemRepository.save(body);
     }
 
