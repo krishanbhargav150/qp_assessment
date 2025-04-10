@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { Order, OrderItem } from './dto/order.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Order } from './dto/order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Orders } from 'src/db/order.entity';
 import { Repository } from 'typeorm';
@@ -31,11 +31,11 @@ export class OrderService {
             const dbItem = await this.itemRepository.findOne({ where: { productErpId } });
         
             if (!dbItem) {
-                throw new Error(`Item with productErpId ${productErpId} not found`);
+                throw new BadRequestException(`Item with productErpId ${productErpId} not found`);
             }
         
             if (dbItem.inventory < quantity) {
-                throw new Error(`Not enough stock for product ${productErpId}`);
+                throw new BadRequestException(`Not enough stock for product ${productErpId}`);
             }
         
             totalQty += quantity;

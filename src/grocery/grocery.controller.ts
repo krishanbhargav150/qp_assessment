@@ -30,12 +30,14 @@ export class GroceryController {
     }
 
     @Delete("/delete-item/:id")
-    async removeItemDetails(@Param('id') id: number) {
+    async removeItemDetails(@Param('id') id: number, @Res() res: Response): Promise<Response> {
         await this.groceryService.removeItemDetails(id);
+        return res.status(200).send("Item deleted successfully!");
     }
 
     @Patch("/update-details/:id")
-    async updateItemDetails(@Param('id') id: number, @Body() body: Partial<Items>) {
+    async updateItemDetails(@Param('id') id: number, @Body() body: Partial<Items>, @Res() res: Response): Promise<Response> {
         await this.groceryService.updateItemDetails(id, body);
+        return res.status(200).send("Item details updated successfully");
     }
 }
