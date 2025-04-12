@@ -12,8 +12,22 @@ export class GroceryService {
     ) {}
 
     async insertNewItem(body: Items[]) {
+        for (const item of body) {
+          const existingItem = await this.itemRepository.findOne({
+            where: {
+              productErpId: item.productErpId,
+              isDeleted: false,
+            },
+          });
+      
+          if (existingItem) {
+            throw new Error(`${item.productErpId} already exists and is not deleted.`);
+          }
+        }
+      
         return await this.itemRepository.save(body);
-    }
+      }
+      
 
     async getItemDetails(): Promise<Item[]> {
         return await this.itemRepository.find();
